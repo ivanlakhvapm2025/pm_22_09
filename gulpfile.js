@@ -1,3 +1,4 @@
+const concat = require('gulp-concat');
 const { src, dest, watch, series, parallel } = require('gulp');
 const fileinclude = require('gulp-file-include');
 const sass = require('gulp-sass')(require('sass'));
@@ -29,8 +30,9 @@ function scssTask() {
 // Обробка JavaScript (об'єднання і мініфікація)
 function jsTask() {
     return src('src/js/**/*.js')
-        .pipe(uglify())
-        .pipe(dest('dist/js'))
+        .pipe(concat('main.min.js')) // Об'єднує всі JS файли в один
+        .pipe(uglify())              // Мініфікує його
+        .pipe(dest('dist/js'))       // Зберігає в папку dist
         .pipe(browserSync.stream());
 }
 
