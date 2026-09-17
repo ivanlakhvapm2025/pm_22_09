@@ -6,7 +6,7 @@ const uglify = require('gulp-uglify');
 const imagemin = require('gulp-imagemin');
 const browserSync = require('browser-sync').create();
 
-// 1. Обробка HTML (з підтримкою file include)
+// Обробка HTML (з підтримкою file include)
 function htmlTask() {
     return src('src/*.html')
         .pipe(fileinclude({
@@ -17,7 +17,7 @@ function htmlTask() {
         .pipe(browserSync.stream()); // оновлює браузер
 }
 
-// 2. Компіляція SCSS у CSS з мініфікацією
+// Компіляція SCSS у CSS з мініфікацією
 function scssTask() {
     return src('src/scss/**/*.scss')
         .pipe(sass().on('error', sass.logError))
@@ -26,7 +26,7 @@ function scssTask() {
         .pipe(browserSync.stream());
 }
 
-// 3. Обробка JavaScript (об'єднання і мініфікація)
+// Обробка JavaScript (об'єднання і мініфікація)
 function jsTask() {
     return src('src/js/**/*.js')
         .pipe(uglify())
@@ -34,14 +34,14 @@ function jsTask() {
         .pipe(browserSync.stream());
 }
 
-// 4. Оптимізація зображень
+// Оптимізація зображень
 function imgTask() {
     return src('src/imgs/**/*')
         .pipe(imagemin())
         .pipe(dest('dist/imgs'));
 }
 
-// 5. Локальний сервер (BrowserSync) для автоматичної синхронізації
+// Локальний сервер (BrowserSync) для автоматичної синхронізації
 function serve() {
     browserSync.init({
         server: {
@@ -50,7 +50,7 @@ function serve() {
     });
 }
 
-// 6. Створення watcher (відслідковування змін у проєкті)
+// Створення watcher (відслідковування змін у проєкті)
 function watchFiles() {
     watch('src/**/*.html', htmlTask);
     watch('src/scss/**/*.scss', scssTask);
