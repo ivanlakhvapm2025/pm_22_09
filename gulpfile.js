@@ -38,7 +38,7 @@ function jsTask() {
 
 // Оптимізація зображень
 function imgTask() {
-    return src('src/imgs/**/*')
+    return src('src/imgs/**/*', {encoding: false})
         .pipe(imagemin())
         .pipe(dest('dist/imgs'));
 }
