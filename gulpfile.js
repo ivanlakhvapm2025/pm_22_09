@@ -30,9 +30,9 @@ function scssTask() {
 // Обробка JavaScript (об'єднання і мініфікація)
 function jsTask() {
     return src('src/js/**/*.js')
-        .pipe(concat('main.min.js')) // Об'єднує всі JS файли в один
-        .pipe(uglify())              // Мініфікує його
-        .pipe(dest('dist/js'))       // Зберігає в папку dist
+        .pipe(concat('main.min.js')) 
+        .pipe(uglify())             
+        .pipe(dest('dist/js'))       
         .pipe(browserSync.stream());
 }
 
@@ -60,8 +60,20 @@ function watchFiles() {
     watch('src/imgs/**/*', imgTask);
 }
 
+// Копіювання CSS Bootstrap
+function bootstrapCss() {
+    return src('node_modules/bootstrap/dist/css/bootstrap.min.css')
+        .pipe(dest('dist/css'));
+}
+
+// Копіювання JS Bootstrap
+function bootstrapJs() {
+    return src('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js')
+        .pipe(dest('dist/js'));
+}
+
 // Запуск усіх завдань за замовчуванням
 exports.default = series(
-    parallel(htmlTask, scssTask, jsTask, imgTask), // спочатку збираємо проєкт
-    parallel(serve, watchFiles)                    // потім запускаємо сервер і watcher
+    parallel(htmlTask, scssTask, jsTask, imgTask, bootstrapCss, bootstrapJs), // спочатку збираємо проєкт
+    parallel(serve, watchFiles)// потім запускаємо сервер і watcher
 );
